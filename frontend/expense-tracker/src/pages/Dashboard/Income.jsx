@@ -82,9 +82,6 @@ const Income = () => {
 
 const handleDownloadIncomeDetails=async()=>{
     try {
-      console.log('Starting download...'); // Debug log
-      toast.loading('Downloading income details...');
-      
       const response=await axiosInstance.get(API_PATHS.INCOME.DOWNLOAD_INCOME,{
         responseType:'blob',
       });
@@ -105,7 +102,7 @@ const handleDownloadIncomeDetails=async()=>{
     } catch (error) {
       console.error("Download error:", error); // Enhanced error logging
       toast.dismiss();
-      toast.error("Failed to download income details. Please try again.");
+      toast.error("Failed to download income details. No Income details found." );
     }
   };
 

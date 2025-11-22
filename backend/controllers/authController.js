@@ -18,7 +18,7 @@ exports.registerUser=async(req,res)=>{
             return res.status(400).json({ message: 'User already exists' });
         }
         const user = await User.create({ fullName, email, password, profileImageUrl });
-        //const token = generateToken(user._id);
+        
         res.status(201).json({
             success: true,
             id:user._id,

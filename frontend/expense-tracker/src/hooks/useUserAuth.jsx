@@ -8,7 +8,6 @@ export const useUserAuth = () => {
     const {user,updateUser,clearUser,loading}=useContext(UserContext);
     const navigate=useNavigate();
     useEffect(()=>{
-        // Don't do anything while loading or if user is already authenticated
         if (loading || user) return;
         
         // Check if we have a token in localStorage

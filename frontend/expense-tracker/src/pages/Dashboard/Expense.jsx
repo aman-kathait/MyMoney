@@ -81,30 +81,39 @@ const Expense = () => {
     }
   };
 
-  const handleDownloadExpenseDetails=async()=>{
-    try {
-      const response=await axiosInstance.get(API_PATHS.EXPENSE.DOWNLOAD_EXPENSE,{
-        responseType:'blob',
-      });
-      const url=window.URL.createObjectURL(new Blob([response.data]));
-      const link=document.createElement('a');
-      link.href=url;
-      link.setAttribute('download','expense_details.xlsx');
-      document.body.appendChild(link);
-      link.click();
-      link.parentNode.removeChild(link);
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.log("Something went wrong while downloading expense details. Please try again.", error.response?.data.message || error.message );
-    }
-  };
+  const handleDownloadExpenseDetails = async () => {
+  try {
+    const response = await axiosInstance.get(API_PATHS.EXPENSE.DOWNLOAD_EXPENSE, {
+      responseType: 'blob',
+    });
+
+    console.log('Download response:', response); // Debug log
+
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'expense_details.xlsx');
+    document.body.appendChild(link);
+    link.click();
+    link.parentNode.removeChild(link);
+    window.URL.revokeObjectURL(url);
+
+    toast.dismiss();
+    toast.success('Expense details downloaded successfully!');
+  } catch (error) {
+    console.error("Download error:", error);
+    toast.dismiss();
+    // Default error message similar to your Income function
+    toast.error("Failed to download expense details. No Expense details found.");
+  }
+};
   useEffect(()=>{
     fetchExpenseDetails();
     return ()=>{};
   },[]);
 
   return (
-    <DashboardLayout activeMenu="Expense">
+    <DashboardLayout activeMenu="Expenses">
       <div className='my-5 mx-auto'>
         <div className="grid grid-cols-1 gap-6">
           <div>
